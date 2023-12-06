@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>655518493333-a67n72hmhrbvco8lpdb8v6acte4sa58o.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.655518493333-a67n72hmhrbvco8lpdb8v6acte4sa58o</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDdJO8P8F2hxZB6gsyw7wLRgjBV0ZcxV8o</string>
+	<key>GCM_SENDER_ID</key>
+	<string>655518493333</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.starzventures.starz</string>
+	<key>PROJECT_ID</key>
+	<string>starzapp</string>
+	<key>STORAGE_BUCKET</key>
+	<string>starzapp.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:655518493333:ios:41153a7a5fbeac28c7c99c</string>
+</dict>
+</plist>

@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "655518493333",
+    "project_id": "starzapp",
+    "storage_bucket": "starzapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:655518493333:android:0ffd42bd02caba16c7c99c",
+        "android_client_info": {
+          "package_name": "com.example.starz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "655518493333-efjnq7mmuf4sa5m8pk16j9f4t5hdrd9q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2X3wwrifUxcdppx61HQ15n9MwFpdyWAE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "655518493333-efjnq7mmuf4sa5m8pk16j9f4t5hdrd9q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "655518493333-a67n72hmhrbvco8lpdb8v6acte4sa58o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.starz"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:655518493333:android:76b9524d749f79c1c7c99c",
+        "android_client_info": {
+          "package_name": "com.starzventures.starz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "655518493333-efjnq7mmuf4sa5m8pk16j9f4t5hdrd9q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2X3wwrifUxcdppx61HQ15n9MwFpdyWAE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "655518493333-efjnq7mmuf4sa5m8pk16j9f4t5hdrd9q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "655518493333-a67n72hmhrbvco8lpdb8v6acte4sa58o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.starz"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
