@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
-import 'package:starz/screens/auth/login/login_page.dart';
-import 'package:starz/screens/home/home_screen.dart';
+import 'package:STARZ/screens/auth/login/login_page.dart';
+import 'package:STARZ/screens/home/home_screen.dart';
 
 class PageChooser extends StatefulWidget {
   const PageChooser({super.key});

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 //import 'package:flutter/src/widgets/framework.dart';
 //import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:starz/screens/video_player/components/basic_overlay_widget.dart';
+import 'package:STARZ/screens/video_player/components/basic_overlay_widget.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerWidget extends StatelessWidget {
@@ -21,7 +21,7 @@ class VideoPlayerWidget extends StatelessWidget {
               )
             : Container(
                 height: 200,
-                child: Center(child: CircularProgressIndicator()),
+                child: const Center(child: CircularProgressIndicator()),
               );
   }
 

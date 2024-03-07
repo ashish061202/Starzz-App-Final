@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class BackgroundImage extends StatelessWidget {
   const BackgroundImage({super.key});
@@ -6,15 +7,20 @@ class BackgroundImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         //color: Colors.amberAccent,
         image: DecorationImage(
             image: AssetImage(
-              "assets/wallpaper.jpg",
+              Get.isDarkMode
+                  ? "assets/whatsapp-dark-wallpaper.jpg"
+                  : "assets/wallpaper.jpg",
             ),
             fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-                Color.fromARGB(160, 0, 0, 0), BlendMode.darken)),
+            colorFilter: Get.isDarkMode
+                ? const ColorFilter.mode(
+                    Color.fromARGB(100, 0, 0, 0), BlendMode.darken)
+                : const ColorFilter.mode(
+                    Color.fromARGB(160, 0, 0, 0), BlendMode.darken)),
       ),
     );
   }

@@ -98,11 +98,11 @@ class _$RetrieveMediaModelCopyWithImpl<$Res, $Val extends RetrieveMediaModel>
 }
 
 /// @nodoc
-abstract class _$$_RetrieveMediaModelCopyWith<$Res>
+abstract class _$$RetrieveMediaModelImplCopyWith<$Res>
     implements $RetrieveMediaModelCopyWith<$Res> {
-  factory _$$_RetrieveMediaModelCopyWith(_$_RetrieveMediaModel value,
-          $Res Function(_$_RetrieveMediaModel) then) =
-      __$$_RetrieveMediaModelCopyWithImpl<$Res>;
+  factory _$$RetrieveMediaModelImplCopyWith(_$RetrieveMediaModelImpl value,
+          $Res Function(_$RetrieveMediaModelImpl) then) =
+      __$$RetrieveMediaModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -115,11 +115,11 @@ abstract class _$$_RetrieveMediaModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_RetrieveMediaModelCopyWithImpl<$Res>
-    extends _$RetrieveMediaModelCopyWithImpl<$Res, _$_RetrieveMediaModel>
-    implements _$$_RetrieveMediaModelCopyWith<$Res> {
-  __$$_RetrieveMediaModelCopyWithImpl(
-      _$_RetrieveMediaModel _value, $Res Function(_$_RetrieveMediaModel) _then)
+class __$$RetrieveMediaModelImplCopyWithImpl<$Res>
+    extends _$RetrieveMediaModelCopyWithImpl<$Res, _$RetrieveMediaModelImpl>
+    implements _$$RetrieveMediaModelImplCopyWith<$Res> {
+  __$$RetrieveMediaModelImplCopyWithImpl(_$RetrieveMediaModelImpl _value,
+      $Res Function(_$RetrieveMediaModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -132,7 +132,7 @@ class __$$_RetrieveMediaModelCopyWithImpl<$Res>
     Object? id = null,
     Object? messagingProduct = null,
   }) {
-    return _then(_$_RetrieveMediaModel(
+    return _then(_$RetrieveMediaModelImpl(
       url: null == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
@@ -163,8 +163,8 @@ class __$$_RetrieveMediaModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_RetrieveMediaModel implements _RetrieveMediaModel {
-  const _$_RetrieveMediaModel(
+class _$RetrieveMediaModelImpl implements _RetrieveMediaModel {
+  const _$RetrieveMediaModelImpl(
       {required this.url,
       required this.mimeType,
       required this.sha256,
@@ -172,8 +172,8 @@ class _$_RetrieveMediaModel implements _RetrieveMediaModel {
       required this.id,
       required this.messagingProduct});
 
-  factory _$_RetrieveMediaModel.fromJson(Map<String, dynamic> json) =>
-      _$$_RetrieveMediaModelFromJson(json);
+  factory _$RetrieveMediaModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RetrieveMediaModelImplFromJson(json);
 
   @override
   final String url;
@@ -194,10 +194,10 @@ class _$_RetrieveMediaModel implements _RetrieveMediaModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RetrieveMediaModel &&
+            other is _$RetrieveMediaModelImpl &&
             (identical(other.url, url) || other.url == url) &&
             (identical(other.mimeType, mimeType) ||
                 other.mimeType == mimeType) &&
@@ -217,13 +217,13 @@ class _$_RetrieveMediaModel implements _RetrieveMediaModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RetrieveMediaModelCopyWith<_$_RetrieveMediaModel> get copyWith =>
-      __$$_RetrieveMediaModelCopyWithImpl<_$_RetrieveMediaModel>(
+  _$$RetrieveMediaModelImplCopyWith<_$RetrieveMediaModelImpl> get copyWith =>
+      __$$RetrieveMediaModelImplCopyWithImpl<_$RetrieveMediaModelImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RetrieveMediaModelToJson(
+    return _$$RetrieveMediaModelImplToJson(
       this,
     );
   }
@@ -236,10 +236,10 @@ abstract class _RetrieveMediaModel implements RetrieveMediaModel {
       required final String sha256,
       required final int fileSize,
       required final String id,
-      required final String messagingProduct}) = _$_RetrieveMediaModel;
+      required final String messagingProduct}) = _$RetrieveMediaModelImpl;
 
   factory _RetrieveMediaModel.fromJson(Map<String, dynamic> json) =
-      _$_RetrieveMediaModel.fromJson;
+      _$RetrieveMediaModelImpl.fromJson;
 
   @override
   String get url;
@@ -255,6 +255,6 @@ abstract class _RetrieveMediaModel implements RetrieveMediaModel {
   String get messagingProduct;
   @override
   @JsonKey(ignore: true)
-  _$$_RetrieveMediaModelCopyWith<_$_RetrieveMediaModel> get copyWith =>
+  _$$RetrieveMediaModelImplCopyWith<_$RetrieveMediaModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

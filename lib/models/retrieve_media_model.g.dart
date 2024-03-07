@@ -6,9 +6,9 @@ part of 'retrieve_media_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_RetrieveMediaModel _$$_RetrieveMediaModelFromJson(
+_$RetrieveMediaModelImpl _$$RetrieveMediaModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$_RetrieveMediaModel(
+    _$RetrieveMediaModelImpl(
       url: json['url'] as String,
       mimeType: json['mimeType'] as String,
       sha256: json['sha256'] as String,
@@ -17,8 +17,8 @@ _$_RetrieveMediaModel _$$_RetrieveMediaModelFromJson(
       messagingProduct: json['messagingProduct'] as String,
     );
 
-Map<String, dynamic> _$$_RetrieveMediaModelToJson(
-        _$_RetrieveMediaModel instance) =>
+Map<String, dynamic> _$$RetrieveMediaModelImplToJson(
+        _$RetrieveMediaModelImpl instance) =>
     <String, dynamic>{
       'url': instance.url,
       'mimeType': instance.mimeType,

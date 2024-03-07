@@ -1,14 +1,27 @@
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'package:multiple_result/multiple_result.dart';
-import 'package:starz/models/phone_number_model.dart';
+import 'package:STARZ/models/phone_number_model.dart';
 
 import '../config.dart';
 import '../models/retrieve_media_model.dart';
 
 class APIService {
+  // static const String openaiApiKey = 'AIzaSyDVxt3lAlM5oa_33m9gi_AeuR_phe8jf5E';
+  // static const String openaiApiUrl = 'https://api.openai.com/v1/engines/davinci/completions';
+
+///////////////////////////////////////////////////////////////////////////////////////////////
   static var client = http.Client();
+
+  //for accessing firebase messaging (push notifications)
+  static FirebaseMessaging fMessaging = FirebaseMessaging.instance;
+
+  //for getting firebase messaging token
+  static Future<void> getFirebaseMessagingToken() async {
+    await fMessaging.requestPermission(); 
+  }
 
 //!Register API
   static Future<Result<bool, String>> registerUser(String pin) async {
@@ -142,11 +155,7 @@ class APIService {
       'Content-Type': 'application/json',
       'Authorization': "Bearer ${AppConfig.apiKey}"
     };
-    var url = Uri.parse(AppConfig.apiURL +
-        AppConfig.version +
-        imageId +
-        "?phone_number_id=" +
-        AppConfig.phoneNoID);
+    var url = Uri.parse("${AppConfig.apiURL}${AppConfig.version}$imageId?phone_number_id=${AppConfig.phoneNoID}");
     try {
       var response = await client.get(
         url,
@@ -168,11 +177,7 @@ class APIService {
       'Content-Type': 'application/json',
       'Authorization': "Bearer ${AppConfig.apiKey}"
     };
-    var url = Uri.parse(AppConfig.apiURL +
-        AppConfig.version +
-        mediaId +
-        "?phone_number_id=" +
-        AppConfig.phoneNoID);
+    var url = Uri.parse("${AppConfig.apiURL}${AppConfig.version}$mediaId?phone_number_id=${AppConfig.phoneNoID}");
     try {
       var response = await client.delete(
         url,

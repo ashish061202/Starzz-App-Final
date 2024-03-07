@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pinput/pinput.dart';
-import 'package:starz/api/api_service.dart';
+import 'package:STARZ/api/api_service.dart';
 
 import '../home/home_screen.dart';
 

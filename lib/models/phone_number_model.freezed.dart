@@ -62,22 +62,22 @@ class _$PhoneNumberModelCopyWithImpl<$Res, $Val extends PhoneNumberModel>
 }
 
 /// @nodoc
-abstract class _$$_PhoneNumberModelCopyWith<$Res>
+abstract class _$$PhoneNumberModelImplCopyWith<$Res>
     implements $PhoneNumberModelCopyWith<$Res> {
-  factory _$$_PhoneNumberModelCopyWith(
-          _$_PhoneNumberModel value, $Res Function(_$_PhoneNumberModel) then) =
-      __$$_PhoneNumberModelCopyWithImpl<$Res>;
+  factory _$$PhoneNumberModelImplCopyWith(_$PhoneNumberModelImpl value,
+          $Res Function(_$PhoneNumberModelImpl) then) =
+      __$$PhoneNumberModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({List<Datum> data});
 }
 
 /// @nodoc
-class __$$_PhoneNumberModelCopyWithImpl<$Res>
-    extends _$PhoneNumberModelCopyWithImpl<$Res, _$_PhoneNumberModel>
-    implements _$$_PhoneNumberModelCopyWith<$Res> {
-  __$$_PhoneNumberModelCopyWithImpl(
-      _$_PhoneNumberModel _value, $Res Function(_$_PhoneNumberModel) _then)
+class __$$PhoneNumberModelImplCopyWithImpl<$Res>
+    extends _$PhoneNumberModelCopyWithImpl<$Res, _$PhoneNumberModelImpl>
+    implements _$$PhoneNumberModelImplCopyWith<$Res> {
+  __$$PhoneNumberModelImplCopyWithImpl(_$PhoneNumberModelImpl _value,
+      $Res Function(_$PhoneNumberModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -85,7 +85,7 @@ class __$$_PhoneNumberModelCopyWithImpl<$Res>
   $Res call({
     Object? data = null,
   }) {
-    return _then(_$_PhoneNumberModel(
+    return _then(_$PhoneNumberModelImpl(
       data: null == data
           ? _value._data
           : data // ignore: cast_nullable_to_non_nullable
@@ -96,11 +96,12 @@ class __$$_PhoneNumberModelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_PhoneNumberModel implements _PhoneNumberModel {
-  const _$_PhoneNumberModel({required final List<Datum> data}) : _data = data;
+class _$PhoneNumberModelImpl implements _PhoneNumberModel {
+  const _$PhoneNumberModelImpl({required final List<Datum> data})
+      : _data = data;
 
-  factory _$_PhoneNumberModel.fromJson(Map<String, dynamic> json) =>
-      _$$_PhoneNumberModelFromJson(json);
+  factory _$PhoneNumberModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PhoneNumberModelImplFromJson(json);
 
   final List<Datum> _data;
   @override
@@ -116,10 +117,10 @@ class _$_PhoneNumberModel implements _PhoneNumberModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PhoneNumberModel &&
+            other is _$PhoneNumberModelImpl &&
             const DeepCollectionEquality().equals(other._data, _data));
   }
 
@@ -131,12 +132,13 @@ class _$_PhoneNumberModel implements _PhoneNumberModel {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PhoneNumberModelCopyWith<_$_PhoneNumberModel> get copyWith =>
-      __$$_PhoneNumberModelCopyWithImpl<_$_PhoneNumberModel>(this, _$identity);
+  _$$PhoneNumberModelImplCopyWith<_$PhoneNumberModelImpl> get copyWith =>
+      __$$PhoneNumberModelImplCopyWithImpl<_$PhoneNumberModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PhoneNumberModelToJson(
+    return _$$PhoneNumberModelImplToJson(
       this,
     );
   }
@@ -144,16 +146,16 @@ class _$_PhoneNumberModel implements _PhoneNumberModel {
 
 abstract class _PhoneNumberModel implements PhoneNumberModel {
   const factory _PhoneNumberModel({required final List<Datum> data}) =
-      _$_PhoneNumberModel;
+      _$PhoneNumberModelImpl;
 
   factory _PhoneNumberModel.fromJson(Map<String, dynamic> json) =
-      _$_PhoneNumberModel.fromJson;
+      _$PhoneNumberModelImpl.fromJson;
 
   @override
   List<Datum> get data;
   @override
   @JsonKey(ignore: true)
-  _$$_PhoneNumberModelCopyWith<_$_PhoneNumberModel> get copyWith =>
+  _$$PhoneNumberModelImplCopyWith<_$PhoneNumberModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -225,9 +227,10 @@ class _$DatumCopyWithImpl<$Res, $Val extends Datum>
 }
 
 /// @nodoc
-abstract class _$$_DatumCopyWith<$Res> implements $DatumCopyWith<$Res> {
-  factory _$$_DatumCopyWith(_$_Datum value, $Res Function(_$_Datum) then) =
-      __$$_DatumCopyWithImpl<$Res>;
+abstract class _$$DatumImplCopyWith<$Res> implements $DatumCopyWith<$Res> {
+  factory _$$DatumImplCopyWith(
+          _$DatumImpl value, $Res Function(_$DatumImpl) then) =
+      __$$DatumImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -238,9 +241,11 @@ abstract class _$$_DatumCopyWith<$Res> implements $DatumCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_DatumCopyWithImpl<$Res> extends _$DatumCopyWithImpl<$Res, _$_Datum>
-    implements _$$_DatumCopyWith<$Res> {
-  __$$_DatumCopyWithImpl(_$_Datum _value, $Res Function(_$_Datum) _then)
+class __$$DatumImplCopyWithImpl<$Res>
+    extends _$DatumCopyWithImpl<$Res, _$DatumImpl>
+    implements _$$DatumImplCopyWith<$Res> {
+  __$$DatumImplCopyWithImpl(
+      _$DatumImpl _value, $Res Function(_$DatumImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -251,7 +256,7 @@ class __$$_DatumCopyWithImpl<$Res> extends _$DatumCopyWithImpl<$Res, _$_Datum>
     Object? id = null,
     Object? quality_rating = null,
   }) {
-    return _then(_$_Datum(
+    return _then(_$DatumImpl(
       verified_name: null == verified_name
           ? _value.verified_name
           : verified_name // ignore: cast_nullable_to_non_nullable
@@ -274,15 +279,15 @@ class __$$_DatumCopyWithImpl<$Res> extends _$DatumCopyWithImpl<$Res, _$_Datum>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Datum implements _Datum {
-  const _$_Datum(
+class _$DatumImpl implements _Datum {
+  const _$DatumImpl(
       {required this.verified_name,
       required this.display_phone_number,
       required this.id,
       required this.quality_rating});
 
-  factory _$_Datum.fromJson(Map<String, dynamic> json) =>
-      _$$_DatumFromJson(json);
+  factory _$DatumImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DatumImplFromJson(json);
 
   @override
   final String verified_name;
@@ -299,10 +304,10 @@ class _$_Datum implements _Datum {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Datum &&
+            other is _$DatumImpl &&
             (identical(other.verified_name, verified_name) ||
                 other.verified_name == verified_name) &&
             (identical(other.display_phone_number, display_phone_number) ||
@@ -320,12 +325,12 @@ class _$_Datum implements _Datum {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_DatumCopyWith<_$_Datum> get copyWith =>
-      __$$_DatumCopyWithImpl<_$_Datum>(this, _$identity);
+  _$$DatumImplCopyWith<_$DatumImpl> get copyWith =>
+      __$$DatumImplCopyWithImpl<_$DatumImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DatumToJson(
+    return _$$DatumImplToJson(
       this,
     );
   }
@@ -336,9 +341,9 @@ abstract class _Datum implements Datum {
       {required final String verified_name,
       required final String display_phone_number,
       required final String id,
-      required final String quality_rating}) = _$_Datum;
+      required final String quality_rating}) = _$DatumImpl;
 
-  factory _Datum.fromJson(Map<String, dynamic> json) = _$_Datum.fromJson;
+  factory _Datum.fromJson(Map<String, dynamic> json) = _$DatumImpl.fromJson;
 
   @override
   String get verified_name;
@@ -350,6 +355,6 @@ abstract class _Datum implements Datum {
   String get quality_rating;
   @override
   @JsonKey(ignore: true)
-  _$$_DatumCopyWith<_$_Datum> get copyWith =>
+  _$$DatumImplCopyWith<_$DatumImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
