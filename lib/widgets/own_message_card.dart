@@ -485,11 +485,11 @@ class _OwnMessageCardState extends State<OwnMessageCard>
             : Card(
                 elevation: 4,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
+                    borderRadius: BorderRadius.circular(12)),
                 color: Get.isDarkMode
                     ? const Color.fromARGB(255, 39, 83, 40)
                     : const Color(0xffdcf8c6),
-                margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                 child: Stack(
                   children: [
                     Padding(

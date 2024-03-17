@@ -165,7 +165,7 @@ class PhoneContactsPage extends GetView<ConctactsController> {
                                           //             ChatPage(prefs: SharedPreferences,)));
                                           await controller.whatsapp
                                               .addMessagesTemplate(
-                                                  templateName: "hello",
+                                                  templateName: "hello_world_1",
                                                   to: to);
                                         }
                                         // After sending the message, navigate to ChatPage

@@ -164,6 +164,8 @@ class FunnelChart extends StatelessWidget {
 class DashboardScreen extends StatefulWidget {
   DashboardScreen({super.key});
 
+  static const id = "/dashboard";
+
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
 }

@@ -279,18 +279,18 @@ class WhatsAppApi {
           "name": templateName,
           "language": {"code": "en"},
           "components": [
-            {
-              "type": "header",
-              "parameters": [
-                {
-                  "type": "image",
-                  "image": {
-                    "link":
-                        "https://media.licdn.com/dms/image/C4D1BAQHNIK5YNTcgWA/company-background_10000/0/1605548774095/starzventures_cover?e=2147483647&v=beta&t=ucC-jW6F52W7udmMLWBqs3f_4JbM0TF-4fF1M-c1_Ls"
-                  },
-                },
-              ],
-            },
+            // {
+            //   "type": "header",
+            //   "parameters": [
+            //     {
+            //       "type": "image",
+            //       "image": {
+            //         "link":
+            //             "https://media.licdn.com/dms/image/C4D1BAQHNIK5YNTcgWA/company-background_10000/0/1605548774095/starzventures_cover?e=2147483647&v=beta&t=ucC-jW6F52W7udmMLWBqs3f_4JbM0TF-4fF1M-c1_Ls"
+            //       },
+            //     },
+            //   ],
+            // },
             {"type": "body", "parameters": []}
           ]
         }
@@ -935,7 +935,7 @@ class WhatsAppApi {
     }
   }
 
-    Future getMediaUrlForRply({mediaId}) async {
+  Future getMediaUrlForRply({mediaId}) async {
     var url = 'https://graph.facebook.com/v18.0/$mediaId';
 
     var response = await http.get(Uri.parse(url), headers: _headers);

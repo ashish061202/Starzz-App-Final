@@ -1,6 +1,10 @@
+import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:STARZ/screens/auth/entry_point.dart';
+import 'package:STARZ/screens/home/components/add_problem.dart';
+import 'package:STARZ/screens/home/components/problem_list.dart';
 import 'package:STARZ/screens/home/components/profile_photo_view_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,6 +19,14 @@ import 'package:STARZ/screens/auth/wabaid_controller.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+class PointUser {
+  String id;
+  String name;
+  int points; // Add this line
+
+  PointUser({required this.id, required this.name, required this.points});
+}
 
 //He
 class ProfileScreen extends StatefulWidget {
@@ -34,6 +46,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool _isFetchingImage = false;
   bool _isUploadingImage = false;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  late PointUser currentUser;
+  late int pointsToRedeem;
+  Timer? _appUsageTimer;
 
   @override
   void initState() {
@@ -48,7 +63,199 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     // Fetch the last uploaded image URL from Firestore
     _fetchLastProfileImage();
+
+    // Initialize currentUser
+    currentUser = PointUser(
+      id: enteredWABAID,
+      name: "Ashish",
+      points: 50,
+    );
+
+    // Initialize pointsToRedeem
+    pointsToRedeem = 0;
+
+    // Retrieve user data from Firebase Authentication
+    // _retrieveUserData();
+    // // Start tracking app usage time
+    // _startAppUsageTracking();
   }
+
+  // @override
+  // void dispose() {
+  //   // Cancel the timer when the widget is disposed
+  //   _appUsageTimer?.cancel();
+  //   super.dispose();
+  // }
+
+  // Future<void> _retrieveUserData() async {
+  //   try {
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     int storedPoints = prefs.getInt('user_${currentUser.id}_points') ?? 0;
+
+  //     setState(() {
+  //       currentUser.points = storedPoints;
+  //     });
+  //   } catch (e) {
+  //     print('Error retrieving user data: $e');
+  //   }
+  // }
+
+  // void _startAppUsageTracking() {
+  //   // Use a timer or other mechanism to track user's time spent in the app
+  //   const Duration appUsageInterval = Duration(seconds: 10);
+
+  //   _appUsageTimer = Timer.periodic(appUsageInterval, (Timer timer) {
+  //     // Check if the widget is still mounted before calling setState
+  //     if (mounted && _appUsageTimer?.isActive == true) {
+  //       // Add points for the user based on app usage
+  //       _addPointsForAppUsage(5);
+  //     }
+  //   });
+  // }
+
+  // void _addPointsForAppUsage(double pointsToAdd) {
+  //   setState(() {
+  //     currentUser.points += pointsToAdd.toInt();
+  //     _savePointsToStorage(currentUser.points);
+  //   });
+  // }
+
+  // void _savePointsToStorage(int points) async {
+  //   try {
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     prefs.setInt('user_${currentUser.id}_points', points);
+  //   } catch (e) {
+  //     print('Error saving points to storage: $e');
+  //   }
+  // }
+
+  // Widget _buildRedeemButton() {
+  //   return ElevatedButton(
+  //     onPressed: () {
+  //       _showRedeemDialog();
+  //     },
+  //     child: const Text('Redeem Points'),
+  //   );
+  // }
+
+  // Widget _buildSlider() {
+  //   return StatefulBuilder(
+  //     builder: (BuildContext context, StateSetter setState) {
+  //       pointsToRedeem = min(currentUser.points, pointsToRedeem);
+
+  //       // Check if there are available points to redeem
+  //       if (currentUser.points > pointsToRedeem) {
+  //         return Column(
+  //           children: [
+  //             Text(
+  //                 'Points to Redeem: $pointsToRedeem'), // Display the current slider value
+  //             const SizedBox(height: 10),
+  //             Slider(
+  //               value: pointsToRedeem.toDouble(),
+  //               min: 0,
+  //               max: (currentUser.points - 1).toDouble(),
+  //               onChanged: (value) {
+  //                 setState(() {
+  //                   pointsToRedeem =
+  //                       value.clamp(0, currentUser.points - 1).toInt();
+  //                 });
+  //               },
+  //             ),
+  //           ],
+  //         );
+  //       } else {
+  //         // Return an empty container if there are no available points
+  //         return const Text("Not enough points to redeem !");
+  //       }
+  //     },
+  //   );
+  // }
+
+  // void _showRedeemDialog() {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         alignment: Alignment.center,
+  //         title: Text('Redeem Points for\n${currentUser.id}'),
+  //         content: Column(
+  //           mainAxisSize: MainAxisSize.min,
+  //           children: [
+  //             Text('Available Points: ${currentUser.points}'),
+  //             const SizedBox(height: 10),
+  //             if (currentUser.points > 0) _buildSlider(),
+  //           ],
+  //         ),
+  //         actions: [
+  //           TextButton(
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //             child: const Text('Cancel'),
+  //           ),
+  //           if (currentUser.points >= pointsToRedeem)
+  //             ElevatedButton(
+  //               onPressed: () {
+  //                 if (currentUser.points >= pointsToRedeem) {
+  //                   _redeemPoints(pointsToRedeem);
+  //                   Navigator.of(context).pop();
+  //                 } else {
+  //                   Fluttertoast.showToast(
+  //                     msg: 'Not enough points to redeem!',
+  //                     toastLength: Toast.LENGTH_SHORT,
+  //                     gravity: ToastGravity.BOTTOM,
+  //                     timeInSecForIosWeb: 1,
+  //                     backgroundColor: Colors.red,
+  //                     textColor: Colors.white,
+  //                     fontSize: 16.0,
+  //                   );
+  //                 }
+  //               },
+  //               child: const Text('Redeem'),
+  //             ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
+
+  // void _redeemPoints(int pointsToRedeem) {
+  //   // Implement your logic to redeem points
+  //   if (currentUser.points >= pointsToRedeem) {
+  //     // Deduct points from the user's account
+  //     currentUser.points -= pointsToRedeem;
+
+  //     // Reset pointsToRedeem to a default value or 0
+  //     setState(() {
+  //       pointsToRedeem = 0;
+  //     });
+
+  //     // Save the updated points to storage
+  //     _savePointsToStorage(currentUser.points);
+
+  //     // Display a success message
+  //     Fluttertoast.showToast(
+  //       msg: 'Points redeemed successfully!',
+  //       toastLength: Toast.LENGTH_SHORT,
+  //       gravity: ToastGravity.BOTTOM,
+  //       timeInSecForIosWeb: 1,
+  //       backgroundColor: Colors.green,
+  //       textColor: Colors.white,
+  //       fontSize: 16.0,
+  //     );
+  //   } else {
+  //     // Display an error message, not enough points
+  //     Fluttertoast.showToast(
+  //       msg: 'Not enough points to redeem!',
+  //       toastLength: Toast.LENGTH_SHORT,
+  //       gravity: ToastGravity.BOTTOM,
+  //       timeInSecForIosWeb: 1,
+  //       backgroundColor: Colors.red,
+  //       textColor: Colors.white,
+  //       fontSize: 16.0,
+  //     );
+  //   }
+  // }
 
   Future<void> _fetchLastProfileImage() async {
     try {
@@ -519,96 +726,99 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: 20,
             ),
             Positioned(
-                child: Padding(
-              padding: const EdgeInsets.all(14.0),
-              child: ListView(children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              child: Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: ListView(
                   children: [
-                    Column(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        _buildProfileHeader(),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                        Column(
                           children: [
-                            Column(
-                              //mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                FutureBuilder<String>(
-                                  future: Future.value(
-                                      wabaidController.enteredWABAID),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return const CircularProgressIndicator();
-                                    } else if (snapshot.hasError) {
-                                      return Text(
-                                          'Error loading WABAID: ${snapshot.error}');
-                                    } else if (snapshot.hasData) {
-                                      final enteredWABAID = snapshot.data!;
-                                      return GestureDetector(
-                                        onLongPress: () =>
-                                            _copyToClipboardWABAID(context),
-                                        child: Text(
-                                          "ID: $enteredWABAID",
-                                          style: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      );
-                                    } else {
-                                      return const Text('No WABAID found');
-                                    }
-                                  },
-                                ),
-                                // FutureBuilder<String>(
-                                //   future: FirebaseAuth.instance.currentUser
-                                //               ?.phoneNumber !=
-                                //           null
-                                //       ? Future.value(FirebaseAuth
-                                //           .instance.currentUser!.phoneNumber!)
-                                //       : Future.value(null),
-                                //   builder: (context, snapshot) {
-                                //     if (snapshot.connectionState ==
-                                //         ConnectionState.waiting) {
-                                //       return const CircularProgressIndicator();
-                                //     } else if (snapshot.hasError) {
-                                //       return Text(
-                                //           'Error loading phone number: ${snapshot.error}');
-                                //     } else if (snapshot.hasData) {
-                                //       final phoneNumber = snapshot.data!;
-                                //       return GestureDetector(
-                                //         onLongPress: () =>
-                                //             _copyToClipboardPhoneNumber(
-                                //                 context, phoneNumber),
-                                //         child: Text(
-                                //           "Phone: $phoneNumber",
-                                //           style: const TextStyle(
-                                //             fontSize: 20,
-                                //             fontWeight: FontWeight.bold,
-                                //           ),
-                                //         ),
-                                //       );
-                                //     } else {
-                                //       return const Text(
-                                //           'No phone number found');
-                                //     }
-                                //   },
-                                // ),
-                              ],
+                            _buildProfileHeader(),
+                            const SizedBox(
+                              height: 15,
                             ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Column(
+                                  //mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    FutureBuilder<String>(
+                                      future: Future.value(
+                                          wabaidController.enteredWABAID),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return const CircularProgressIndicator();
+                                        } else if (snapshot.hasError) {
+                                          return Text(
+                                              'Error loading WABAID: ${snapshot.error}');
+                                        } else if (snapshot.hasData) {
+                                          final enteredWABAID = snapshot.data!;
+                                          return GestureDetector(
+                                            onLongPress: () =>
+                                                _copyToClipboardWABAID(context),
+                                            child: Text(
+                                              "ID: $enteredWABAID",
+                                              style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          );
+                                        } else {
+                                          return const Text('No WABAID found');
+                                        }
+                                      },
+                                    ),
+                                    FutureBuilder<String>(
+                                      future: FirebaseAuth.instance.currentUser
+                                                  ?.phoneNumber !=
+                                              null
+                                          ? Future.value(FirebaseAuth.instance
+                                              .currentUser!.phoneNumber!)
+                                          : Future.value(null),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return const CircularProgressIndicator();
+                                        } else if (snapshot.hasError) {
+                                          return Text(
+                                              'Error loading phone number: ${snapshot.error}');
+                                        } else if (snapshot.hasData) {
+                                          final phoneNumber = snapshot.data!;
+                                          return GestureDetector(
+                                            onLongPress: () =>
+                                                _copyToClipboardPhoneNumber(
+                                                    context, phoneNumber),
+                                            child: Text(
+                                              "Phone: $phoneNumber",
+                                              style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          );
+                                        } else {
+                                          return const Text(
+                                              'No phone number found');
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ],
                 ),
-              ]),
-            )),
+              ),
+            ),
             Positioned(
               top: 200,
               left: 0,
@@ -663,16 +873,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       ListTile(
                         onTap: () async {
-                          // Perform logout
                           await _firebaseAuth.signOut();
-
-                          // Clear SharedPreferences data
-                          // SharedPreferences prefs =
-                          //     await SharedPreferences.getInstance();
-                          // prefs.remove('enteredWABAID');
-                          // prefs.remove('phoneNumber');
-
-                          Get.toNamed(EntryPoint.id);
+                          // Clear the navigation stack and push the entry point page
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (context) => const EntryPoint(),
+                            ),
+                            (route) => false,
+                          );
                         },
                         leading: Icon(Icons.logout_outlined,
                             color: isDarkMode ? Colors.white : Colors.black),
@@ -685,6 +893,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 15),
+                      // ListTile(
+                      //   onTap: () {
+                      //     Navigator.of(context).push(
+                      //       MaterialPageRoute(
+                      //         builder: (context) => ProblemsListPage(
+                      //           enteredWABAID: enteredWABAID,
+                      //         ),
+                      //       ),
+                      //     );
+                      //   },
+                      //   leading: Icon(Icons.sync_problem,
+                      //       color: isDarkMode ? Colors.white : Colors.black),
+                      //   title: Text(
+                      //     "Add problem",
+                      //     style: TextStyle(
+                      //       fontSize: 20,
+                      //       fontWeight: FontWeight.bold,
+                      //       color: isDarkMode ? Colors.white : Colors.black,
+                      //     ),
+                      //   ),
+                      // ),
+                      const SizedBox(height: 15),
+                      //_buildRedeemButton(),
                       const SizedBox(
                         height: 20,
                       ),

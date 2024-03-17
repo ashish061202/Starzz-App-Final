@@ -657,9 +657,10 @@ class _ReplyCardState extends State<ReplyCard> {
                 : Card(
                     elevation: 4,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
+                        borderRadius: BorderRadius.circular(12)),
                     // color: Color(0xffdcf8c6),
-                    margin: const EdgeInsets.symmetric(horizontal: 15),
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                     child: Stack(
                       children: [
                         Padding(
@@ -667,7 +668,7 @@ class _ReplyCardState extends State<ReplyCard> {
                             left: 8,
                             right: 8,
                             top: 8,
-                            bottom: 20,
+                            bottom: 15,
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -908,7 +909,9 @@ class _ReplyCardState extends State<ReplyCard> {
                             widget.time,
                             style: TextStyle(
                               fontSize: 12,
-                              color: Colors.grey[600],
+                              color: Get.isDarkMode
+                                  ? Colors.grey[500]
+                                  : Colors.grey[600],
                             ),
                           ),
                         ),

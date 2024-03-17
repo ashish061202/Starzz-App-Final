@@ -30,6 +30,7 @@ class ReplyMessageCardReply extends StatefulWidget {
     required this.phoneNumber,
     required this.myReply,
     required this.phoneNumberId,
+    required this.userName,
     // required this.templateName,
     // required this.templateId,
   }) {
@@ -45,6 +46,7 @@ class ReplyMessageCardReply extends StatefulWidget {
   final String phoneNumber;
   final String phoneNumberId;
   final bool myReply;
+  final String userName;
   // final String templateName;
   // final String templateId;
 
@@ -300,11 +302,10 @@ class _ReplyMessageCardReplyState extends State<ReplyMessageCardReply> {
           child: Stack(
             children: [
               Card(
-                elevation: 1,
+                elevation: 4,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-                // color: Color(0xffdcf8c6),
-                margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                    borderRadius: BorderRadius.circular(15)),
+                margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                 color: widget.myReply
                     ? (Get.isDarkMode
                         ? const Color.fromARGB(255, 39, 83, 40)
@@ -315,10 +316,10 @@ class _ReplyMessageCardReplyState extends State<ReplyMessageCardReply> {
                   children: [
                     Card(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
+                          borderRadius: BorderRadius.circular(12)),
                       // color: Color(0xffdcf8c6),
                       margin: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 5),
+                          horizontal: 4, vertical: 4),
                       color: widget.myReply
                           ? (Get.isDarkMode
                               ? const Color.fromARGB(255, 26, 54, 27)
@@ -334,8 +335,8 @@ class _ReplyMessageCardReplyState extends State<ReplyMessageCardReply> {
                             Text(
                               widget.message.context != null
                                   ? widget.message.context['from'] ??
-                                      'Unknown Sender'
-                                  : 'Unknown Sender',
+                                      'Anonymous'
+                                  : 'Anonymous',
                               style: TextStyle(
                                 color: widget.myReply
                                     ? Colors.blue
@@ -788,17 +789,21 @@ class _ReplyMessageCardReplyState extends State<ReplyMessageCardReply> {
                 ),
               ),
               Positioned(
-                bottom: 5,
-                right: 20,
+                bottom: 6,
+                right: 7,
                 child: Row(
                   children: [
                     Text(
                       widget.time,
                       style: TextStyle(
-                        fontSize: 13,
-                        color: Get.isDarkMode
-                            ? Colors.grey.shade400
-                            : Colors.grey[600],
+                        fontSize: 12,
+                        color: widget.myReply
+                            ? (Get.isDarkMode
+                                ? Colors.grey.shade400
+                                : Colors.grey[600])
+                            : (Get.isDarkMode
+                                ? Colors.grey[500]
+                                : Colors.grey[600]),
                       ),
                     ),
                     const SizedBox(
@@ -807,7 +812,7 @@ class _ReplyMessageCardReplyState extends State<ReplyMessageCardReply> {
                     if (widget.myReply)
                       Icon(
                         Icons.done_all,
-                        size: 20,
+                        size: 17,
                         color: Get.isDarkMode
                             ? Colors.grey.shade400
                             : Colors.grey[600],

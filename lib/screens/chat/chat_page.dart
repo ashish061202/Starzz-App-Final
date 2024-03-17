@@ -2335,8 +2335,6 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     void _showBottomSheet(BuildContext context) {
-      bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
       showModalBottomSheet(
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
@@ -2611,56 +2609,69 @@ class _ChatPageState extends State<ChatPage> {
 
                             if (messages[index].from == phoneNumberId) {
                               if (messages[index].context.isNotEmpty) {
+                                String formattedTime = DateFormat("hh:mm a")
+                                    .format(DateTime.fromMillisecondsSinceEpoch(
+                                        messages[index]
+                                            .timestamp
+                                            .millisecondsSinceEpoch));
                                 messageCard = ReplyMessageCardReply(
                                   message: messages[index],
-                                  time: DateFormat("h:mm a").format(
-                                      DateTime.fromMillisecondsSinceEpoch(
-                                          messages[index]
-                                              .timestamp
-                                              .millisecondsSinceEpoch)),
+                                  time: formattedTime
+                                      .replaceAll('AM', 'am')
+                                      .replaceAll('PM', 'pm'),
                                   phoneNumber: widget.phoneNumber,
                                   phoneNumberId: phoneNumberId,
                                   myReply: true,
+                                  userName: widget.userName,
                                 );
                               } else {
                                 print('+++ 2');
                                 // Check if the clicked message has an 'id'
-                                String messageId = messages[index].id;
+                                String formattedTime = DateFormat("hh:mm a")
+                                    .format(DateTime.fromMillisecondsSinceEpoch(
+                                        messages[index]
+                                            .timestamp
+                                            .millisecondsSinceEpoch));
                                 messageCard = OwnMessageCard(
                                   message: messages[index],
-                                  time: DateFormat("h:mm a").format(
-                                      DateTime.fromMillisecondsSinceEpoch(
-                                          messages[index]
-                                              .timestamp
-                                              .millisecondsSinceEpoch)),
+                                  time: formattedTime
+                                      .replaceAll('AM', 'am')
+                                      .replaceAll('PM', 'pm'),
                                   phoneNumberId: phoneNumberId,
                                 );
                               }
                             } else {
                               print('+++ 3');
                               if (messages[index].context.isNotEmpty) {
+                                String formattedTime = DateFormat("hh:mm a")
+                                    .format(DateTime.fromMillisecondsSinceEpoch(
+                                        messages[index]
+                                            .timestamp
+                                            .millisecondsSinceEpoch));
                                 messageCard = ReplyMessageCardReply(
                                   message: messages[index],
-                                  time: DateFormat("h:mm a").format(
-                                      DateTime.fromMillisecondsSinceEpoch(
-                                          messages[index]
-                                              .timestamp
-                                              .millisecondsSinceEpoch)),
+                                  time: formattedTime
+                                      .replaceAll('AM', 'am')
+                                      .replaceAll('PM', 'pm'),
                                   phoneNumber: widget.phoneNumber,
                                   phoneNumberId: phoneNumberId,
+                                  userName: widget.userName,
                                   // templateName: yourTemplateName,
                                   // templateId: yourTemplateId,
                                   myReply: false,
                                 );
                               } else {
                                 print('+++ 4');
+                                String formattedTime = DateFormat("hh:mm a")
+                                    .format(DateTime.fromMillisecondsSinceEpoch(
+                                        messages[index]
+                                            .timestamp
+                                            .millisecondsSinceEpoch));
                                 messageCard = ReplyCard(
                                   message: messages[index],
-                                  time: DateFormat("h:mm a").format(
-                                      DateTime.fromMillisecondsSinceEpoch(
-                                          messages[index]
-                                              .timestamp
-                                              .millisecondsSinceEpoch)),
+                                  time: formattedTime
+                                      .replaceAll('AM', 'am')
+                                      .replaceAll('PM', 'pm'),
                                   phoneNumberId: phoneNumberId,
                                 );
                               }
@@ -2861,53 +2872,52 @@ class _ChatPageState extends State<ChatPage> {
                                               }
                                             },
                                             decoration: InputDecoration(
-                                                border: InputBorder.none,
-                                                hintText: "Type a message",
-                                                prefixIcon: IconButton(
-                                                    onPressed: () {
-                                                      focusNode.unfocus();
-                                                      focusNode
-                                                              .canRequestFocus =
-                                                          false;
-                                                      setState(() {
-                                                        show = !show;
-                                                      });
+                                              border: InputBorder.none,
+                                              hintText: "Type a message",
+                                              prefixIcon: IconButton(
+                                                  onPressed: () {
+                                                    focusNode.unfocus();
+                                                    focusNode.canRequestFocus =
+                                                        false;
+                                                    setState(() {
+                                                      show = !show;
+                                                    });
+                                                  },
+                                                  icon: const Icon(
+                                                      Icons.emoji_emotions)),
+                                              suffixIcon: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  IconButton(
+                                                      onPressed: () {
+                                                        _showBottomSheet(
+                                                            context);
+                                                      },
+                                                      icon: const Icon(
+                                                          Icons.attach_file)),
+                                                  IconButton(
+                                                    onPressed: () async {
+                                                      await Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              CameraScreen(
+                                                            roomId:
+                                                                widget.roomId,
+                                                            phoneNumber: widget
+                                                                .phoneNumber,
+                                                          ),
+                                                        ),
+                                                      );
                                                     },
                                                     icon: const Icon(
-                                                        Icons.emoji_emotions)),
-                                                suffixIcon: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    IconButton(
-                                                        onPressed: () {
-                                                          _showBottomSheet(
-                                                              context);
-                                                        },
-                                                        icon: const Icon(
-                                                            Icons.attach_file)),
-                                                    IconButton(
-                                                        onPressed: () {
-                                                          Navigator
-                                                              .pushReplacement(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  CameraScreen(
-                                                                roomId: widget
-                                                                    .roomId,
-                                                                phoneNumber: widget
-                                                                    .phoneNumber,
-                                                              ),
-                                                            ),
-                                                          );
-                                                        },
-                                                        icon: const Icon(
-                                                            Icons.camera_alt))
-                                                  ],
-                                                ),
-                                                contentPadding:
-                                                    const EdgeInsets.all(5)),
+                                                        Icons.camera_alt),
+                                                  ),
+                                                ],
+                                              ),
+                                              contentPadding:
+                                                  const EdgeInsets.all(5),
+                                            ),
                                           ),
                                         ],
                                       ),

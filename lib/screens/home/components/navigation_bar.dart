@@ -1,4 +1,7 @@
+import 'package:STARZ/screens/auth/entry_point.dart';
+import 'package:STARZ/screens/auth/login/rain_animation.dart';
 import 'package:STARZ/screens/home/components/theme_controller.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:STARZ/screens/home/components/dashboard_screen.dart';
 import 'package:STARZ/screens/home/components/profile_page.dart';
@@ -15,6 +18,8 @@ class NavigationScreen extends StatefulWidget {
 }
 
 class _NavigationBarState extends State<NavigationScreen> {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
   int _currentIndex = 0;
   List<Widget> widgetList = [
     DashboardScreen(),
@@ -106,11 +111,11 @@ class _NavigationBarState extends State<NavigationScreen> {
 
         return AlertDialog(
           title: Text(
-            'Do you really want to exit the app?',
+            'Log out?',
             style: titleStyle,
           ),
           content: Text(
-            'Exiting the app will close all active sessions.',
+            'Do you really want to log-out from current session?',
             style: contentStyle,
           ),
           actions: <Widget>[
@@ -122,7 +127,16 @@ class _NavigationBarState extends State<NavigationScreen> {
               ),
             ),
             TextButton(
-              onPressed: () => Navigator.of(context).pop(true),
+              onPressed: () async {
+                await _firebaseAuth.signOut();
+                // Clear the navigation stack and push the entry point page
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (context) => const EntryPoint(),
+                  ),
+                  (route) => false,
+                );
+              },
               child: Text(
                 'Yes',
                 style: yesButtonStyle,

@@ -1,4 +1,5 @@
 import 'package:STARZ/screens/auth/entry_point.dart';
+import 'package:STARZ/screens/auth/login/rain_animation.dart';
 import 'package:STARZ/screens/home/components/navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +8,9 @@ import 'package:pinput/pinput.dart';
 
 class OtpLoginPage extends StatefulWidget {
   static const id = '/otp-login';
-  String verificationid;
-  String enteredWABAID;
-  OtpLoginPage(
+  final String verificationid;
+  final String enteredWABAID;
+  const OtpLoginPage(
       {super.key, required this.verificationid, required this.enteredWABAID});
 
   @override
@@ -29,7 +30,7 @@ class _OtpLoginPageState extends State<OtpLoginPage> {
           color: Color.fromRGBO(30, 60, 87, 1),
           fontWeight: FontWeight.w600),
       decoration: BoxDecoration(
-        border: Border.all(color: const Color.fromARGB(255, 183, 188, 191)),
+        border: Border.all(color: Colors.white),
         borderRadius: BorderRadius.circular(20),
       ),
     );
@@ -60,103 +61,114 @@ class _OtpLoginPageState extends State<OtpLoginPage> {
         ),
         elevation: 0,
       ),
-      body: Container(
-        margin: const EdgeInsets.only(left: 25, right: 25),
-        alignment: Alignment.center,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/otp_screen_logo.png',
-                width: 150,
-                height: 150,
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              const Text(
-                "Phone Verification",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Text(
-                "We need to register your phone without getting started!",
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Pinput(
-                length: 6,
-                controller: otpController,
-                defaultPinTheme: defaultPinTheme,
-                focusedPinTheme: focusedPinTheme,
-                submittedPinTheme: submittedPinTheme,
-                showCursor: true,
-                onCompleted: (pin) => print(pin),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                width: double.infinity,
-                height: 45,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.purple.shade400,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10))),
-                  onPressed: () async {
-                    try {
-                      PhoneAuthCredential credential =
-                          PhoneAuthProvider.credential(
-                        verificationId: widget.verificationid,
-                        smsCode: otpController.text.toString(),
-                      );
-                      FirebaseAuth.instance
-                          .signInWithCredential(credential)
-                          .then(
-                        (value) {
-                          Get.toNamed(NavigationScreen.id,
-                              arguments: widget.enteredWABAID);
-                        },
-                      );
-                    } catch (e) {
-                      print('OTP Login Page Error : $e.toString()');
-                    }
-                  },
-                  child: const Text(
-                    "Verify Phone Number",
+      body: Stack(
+        children: [
+          const RainAnimation(),
+          Container(
+            margin: const EdgeInsets.only(left: 25, right: 25),
+            alignment: Alignment.center,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/otp_screen_logo.png',
+                    width: 150,
+                    height: 150,
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  const Text(
+                    "Phone Verification",
                     style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
-                ),
-              ),
-              Row(
-                children: [
-                  TextButton(
-                      onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          EntryPoint.id,
-                          (route) => false,
-                        );
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Text(
+                    "We need to register your phone without getting started!",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Pinput(
+                    length: 6,
+                    controller: otpController,
+                    defaultPinTheme: defaultPinTheme,
+                    focusedPinTheme: focusedPinTheme,
+                    submittedPinTheme: submittedPinTheme,
+                    showCursor: true,
+                    onCompleted: (pin) => print(pin),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 45,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.purple.shade400,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                      onPressed: () async {
+                        try {
+                          PhoneAuthCredential credential =
+                              PhoneAuthProvider.credential(
+                            verificationId: widget.verificationid,
+                            smsCode: otpController.text.toString(),
+                          );
+                          FirebaseAuth.instance
+                              .signInWithCredential(credential)
+                              .then(
+                            (value) {
+                              Get.toNamed(NavigationScreen.id,
+                                  arguments: widget.enteredWABAID);
+                            },
+                          );
+                        } catch (e) {
+                          print('OTP Login Page Error : $e.toString()');
+                        }
                       },
                       child: const Text(
-                        "Edit Phone Number ?",
-                      ))
+                        "Verify Phone Number",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            EntryPoint.id,
+                            (route) => false,
+                          );
+                        },
+                        child: const Text(
+                          "Edit Phone Number ?",
+                        ),
+                      ),
+                    ],
+                  )
                 ],
-              )
-            ],
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

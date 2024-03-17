@@ -2,7 +2,10 @@ import 'package:STARZ/api/firebase_api.dart';
 import 'package:STARZ/controllers/custom_hero_controller.dart';
 import 'package:STARZ/message_utility.dart';
 import 'package:STARZ/screens/chat/notification_util.dart';
+import 'package:STARZ/screens/home/components/add_problem.dart';
+import 'package:STARZ/screens/home/components/problem_list.dart';
 import 'package:STARZ/screens/home/components/theme_controller.dart';
+import 'package:STARZ/screens/home/components/view_problem.dart';
 import 'package:STARZ/widgets/custom_card_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -173,12 +176,8 @@ class _MyAppState extends State<MyApp> {
           GetPage(name: HomeScreen.id, page: () => const HomeScreen()),
           GetPage(name: PDFViewerPage.id, page: () => const PDFViewerPage()),
           GetPage(name: EntryPoint.id, page: () => const EntryPoint()),
-
-          //GetPage(name: NavigationBar.id, page: ()=>NavigationBar()),
           GetPage(
               name: NavigationScreen.id, page: () => const NavigationScreen()),
-          //GetPage(name: ProfileScreen.id, page: () => const ProfileScreen()),
-          //GetPage(name: EntryPoint.id, page: () => NavigationScreen()),
           GetPage(name: RegisterScreen.id, page: () => const RegisterScreen()),
           GetPage(name: ChatPage.id, page: () => ChatPage(prefs: widget.prefs)),
           GetPage(name: LoginPage.id, page: () => const LoginPage()),
@@ -188,6 +187,14 @@ class _MyAppState extends State<MyApp> {
           GetPage(
               name: PrivacyAndPolicyPage.id,
               page: () => const PrivacyAndPolicyPage()),
+          GetPage(
+              name: AddProblemPage.id,
+              page: () => const AddProblemPage(
+                    enteredWABAID: '',
+                  )),
+          // GetPage(
+          //     name: ProblemsListPage.id, page: () => const ProblemsListPage()),
+          //GetPage(name: ViewProblemPage.id, page: () => const ViewProblemPage()),
           //GetPage(name: OtpLoginPage.id, page: () => OtpLoginPage()),
         ],
         initialBinding: BindingsBuilder(() {

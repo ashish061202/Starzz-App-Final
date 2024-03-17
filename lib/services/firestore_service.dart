@@ -1,8 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:STARZ/config.dart';
-import 'package:STARZ/screens/auth/wabaid_controller.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:get/get.dart';
 
 Stream<QuerySnapshot<Map<String, dynamic>>> getLastMessageStream(
     String phoneNumber, String enteredWABAID) {
@@ -47,4 +43,5 @@ Future<Map<String, dynamic>?> getLastMessage(
     print("Error fetching last message: $e");
     return null;
   }
+  return null;
 }

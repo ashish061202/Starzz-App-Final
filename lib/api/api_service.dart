@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:multiple_result/multiple_result.dart';
 import 'package:STARZ/models/phone_number_model.dart';
@@ -20,7 +21,7 @@ class APIService {
 
   //for getting firebase messaging token
   static Future<void> getFirebaseMessagingToken() async {
-    await fMessaging.requestPermission(); 
+    await fMessaging.requestPermission();
   }
 
 //!Register API
@@ -29,10 +30,8 @@ class APIService {
       'Content-Type': 'application/json',
       'Authorization': "Bearer ${AppConfig.apiKey}"
     };
-    var url = Uri.parse(AppConfig.apiURL +
-        AppConfig.version +
-        AppConfig.phoneNoID +
-        AppConfig.registerAPI);
+    var url =
+        Uri.parse('https://graph.facebook.com/v19.0/170851489447426/register');
     try {
       var response = await client.post(
         url,
@@ -44,12 +43,18 @@ class APIService {
           },
         ),
       );
+      print('Response of register : ${response.body}');
+
       if (response.statusCode == 200) {
+        print('Response of register : ${response.body}');
         return const Success(true);
       } else {
+        final errorMessage = jsonDecode(response.body)['error']['message'];
+        print('Failed to Register user: $errorMessage');
         return Error(jsonDecode(response.body)['error']['message']);
       }
     } catch (e) {
+      print('Exception while Registering user: $e');
       return Error(e.toString());
     }
   }
@@ -155,7 +160,8 @@ class APIService {
       'Content-Type': 'application/json',
       'Authorization': "Bearer ${AppConfig.apiKey}"
     };
-    var url = Uri.parse("${AppConfig.apiURL}${AppConfig.version}$imageId?phone_number_id=${AppConfig.phoneNoID}");
+    var url = Uri.parse(
+        "${AppConfig.apiURL}${AppConfig.version}$imageId?phone_number_id=${AppConfig.phoneNoID}");
     try {
       var response = await client.get(
         url,
@@ -177,7 +183,8 @@ class APIService {
       'Content-Type': 'application/json',
       'Authorization': "Bearer ${AppConfig.apiKey}"
     };
-    var url = Uri.parse("${AppConfig.apiURL}${AppConfig.version}$mediaId?phone_number_id=${AppConfig.phoneNoID}");
+    var url = Uri.parse(
+        "${AppConfig.apiURL}${AppConfig.version}$mediaId?phone_number_id=${AppConfig.phoneNoID}");
     try {
       var response = await client.delete(
         url,

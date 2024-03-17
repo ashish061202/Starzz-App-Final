@@ -189,6 +189,19 @@ class _EntryPointState extends State<EntryPoint> {
     }
   }
 
+  // Function to handle clearing SharedPreferences, unhiding WABAID input field, and clearing phone number input field
+  void _clearSharedPreferencesAndFields() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('enteredWABAID');
+    await prefs.remove('phoneNumber');
+    _wabaIdController.clear();
+    _phoneNumberController.clear();
+
+    setState(() {
+      hideWABAIDField = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -224,7 +237,7 @@ class _EntryPointState extends State<EntryPoint> {
                       SizedBox(
                         height: !_phoneNumberController.text.isNotEmpty &&
                                 !hideWABAIDField
-                            ? 70
+                            ? 50
                             : 20,
                       ),
                       Padding(
@@ -234,7 +247,7 @@ class _EntryPointState extends State<EntryPoint> {
                             SizedBox(
                               height: !_phoneNumberController.text.isNotEmpty &&
                                       !hideWABAIDField
-                                  ? 12
+                                  ? 10
                                   : 5,
                             ),
                             if (!_phoneNumberController.text.isNotEmpty &&
@@ -293,6 +306,25 @@ class _EntryPointState extends State<EntryPoint> {
                           ],
                         ),
                       ),
+                      // SizedBox(
+                      //   height: _phoneNumberController.text.isNotEmpty &&
+                      //           hideWABAIDField
+                      //       ? null
+                      //       : 20,
+                      // ),
+                      if (_phoneNumberController.text.isNotEmpty &&
+                          hideWABAIDField)
+                        TextButton(
+                          onPressed: () {
+                            _clearSharedPreferencesAndFields();
+                          },
+                          child: const Text(
+                            'Click here to login with another WABAID',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                       SizedBox(
                         height: !_phoneNumberController.text.isNotEmpty &&
                                 !hideWABAIDField
@@ -380,6 +412,16 @@ class _EntryPointState extends State<EntryPoint> {
                             WABAIDController wabaidController = Get.find();
                             wabaidController
                                 .setPhoneNumber(docSnapshot['phoneNumber']);
+
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (_) => OtpLoginPage(
+                            //       verificationid: "verificationid",
+                            //       enteredWABAID: enteredWABAID,
+                            //     ),
+                            //   ),
+                            // );
 
                             if (docSnapshot.data()!.containsKey('Phone')) {
                               if (enteredPhoneNumber == docSnapshot['Phone']) {

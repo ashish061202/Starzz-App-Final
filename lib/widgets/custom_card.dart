@@ -256,8 +256,11 @@ class _CustomCardState extends State<CustomCard> {
 
     if (now.difference(messageTime).inDays == 0) {
       // If the message is from today, display the formatted time
-      return formatter.format(messageTime); // Adjust the format as needed
-    } else if (now.difference(messageTime).inDays == 1) {
+      String formattedTime = formatter.format(messageTime);
+      return formattedTime
+          .replaceAll('AM', 'am')
+          .replaceAll('PM', 'pm'); // Adjust the format as needed
+    } else if (now.difference(messageTime).inHours == 24) {
       // If the message is from yesterday, display 'Yesterday'
       return 'Yesterday';
     } else {

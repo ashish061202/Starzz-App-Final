@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'package:STARZ/screens/auth/wabaid_controller.dart';
 import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:STARZ/config.dart';
 import 'package:STARZ/api/whatsapp_api.dart';
+import 'package:get/get.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:STARZ/models/message.dart';
@@ -23,11 +25,13 @@ class CameraScreen extends StatefulWidget {
     whatsApp = WhatsAppApi();
     whatsApp.setup(
         accessToken: AppConfig.apiKey,
-        fromNumberId: int.tryParse(AppConfig.phoneNoID));
+        fromNumberId: int.tryParse(phoneNumberId));
   }
 
   late WhatsAppApi whatsApp;
   static const id = "/cameraScreen";
+  final wabaidController = Get.find<WABAIDController>();
+  late String phoneNumberId = wabaidController.phoneNumber;
 
   @override
   State<CameraScreen> createState() => _CameraScreenState();
@@ -52,7 +56,7 @@ class _CameraScreenState extends State<CameraScreen> {
         CameraController(
           const CameraDescription(
             name: "0",
-            lensDirection: CameraLensDirection.back,
+            lensDirection: CameraLensDirection.front,
             sensorOrientation: 0,
           ),
           ResolutionPreset.high,
@@ -205,21 +209,18 @@ class _CameraScreenState extends State<CameraScreen> {
 
           print('+++ MESSAGE RES $res');
 
-          // After saving to Firestore, navigate to the chat page
-          Navigator.pushReplacementNamed(
-            context,
-            ChatPage.id,
-            arguments: {
-              "to": widget.phoneNumber,
-              "roomId": widget.roomId,
-              "recentMessageId": res.id,
-            },
-          );
+          // ignore: use_build_context_synchronously
+          Navigator.of(context).pop();
         } else {
           print('Error uploading media: Response does not contain "id"');
         }
       } catch (e) {
         print('Error sending image: $e');
+      } finally {
+        // Always set _isSending to false after the sending process
+        setState(() {
+          _isSending = false;
+        });
       }
     }
   }
@@ -308,12 +309,18 @@ class _CameraScreenState extends State<CameraScreen> {
 
           print('+++ MESSAGE RES $res');
 
-          Navigator.pop(context);
+          // ignore: use_build_context_synchronously
+          Navigator.of(context).pop();
         } else {
           print('Error uploading media: Response does not contain "id"');
         }
       } catch (e) {
         print('Error sending video: $e');
+      } finally {
+        // Always set _isSending to false after the sending process
+        setState(() {
+          _isSending = false;
+        });
       }
     }
   }
